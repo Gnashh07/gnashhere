@@ -1,12 +1,14 @@
-export default function Projects() {
+export default function Contact() {
     return (
       <>
         <header>
-          <h1>Projects</h1>
+          <h1>Contact</h1>
         </header>
   
         <main className="container">
-          <p>Coming soon: A showcase of my completed and ongoing projects.</p>
+          <p>
+            Feel free to reach out to me at <a href="mailto:your-email@example.com">your-email@example.com</a>.
+          </p>
         </main>
   
         <footer>

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div
+    (<div
       style={{
         backgroundColor: "black",
         color: "white",
@@ -17,15 +17,15 @@ export default function Home() {
     >
       <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>
         hey, it's{" "}
-        <Link href="/about">
-          <a
-            style={{
-              color: "purple",
-              textDecoration: "none",
-            }}
-          >
+        <Link
+          href="/about"
+          style={{
+            color: "purple",
+            textDecoration: "none",
+          }}>
+          
             gnashhere
-          </a>
+          
         </Link>
       </h1>
       <p style={{ marginBottom: "2rem" }}>this is my second brain.</p>
@@ -46,6 +46,6 @@ export default function Home() {
       <footer style={{ marginTop: "2rem", fontSize: "0.8rem" }}>
         © 2024 GnashHere. All Rights Reserved.
       </footer>
-    </div>
+    </div>)
   );
 }
