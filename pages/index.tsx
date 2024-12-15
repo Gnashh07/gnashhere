@@ -16,7 +16,7 @@ export default function Home() {
       }}
     >
       <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>
-        hey, it's{" "}
+        hey, it&apos;s{" "}
         <Link
           href="/about"
           style={{
