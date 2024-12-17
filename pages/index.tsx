@@ -1,5 +1,9 @@
 // index.tsx
 import Link from "next/link";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons/faXTwitter";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons/faInstagram";
+import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons/faLinkedinIn";
 
 export default function Home() {
   return (
@@ -21,7 +25,7 @@ export default function Home() {
           href="/about"
           style={{
             color: "purple",
-            textDecoration: "none",
+            textDecoration: "underline",
           }}>
           
             gnashhere
@@ -36,11 +40,24 @@ export default function Home() {
         <a href="/projects" style={{ textDecoration: "none", color: "white" }}>
           projects
         </a>
-        <a href="/contact" style={{ textDecoration: "none", color: "white" }}>
+        {/* <a href="/contact" style={{ textDecoration: "none", color: "white" }}>
           contact
-        </a>
+        </a> */}
         <a href="/bookshelf" style={{ textDecoration: "none", color: "white" }}>
           bookshelf
+        </a>
+      </nav>
+      <hr style={{visibility: "hidden"}}/>
+      <hr style={{visibility: "hidden"}}/>
+      <nav style={{ display: "flex", gap: "1.5rem", fontSize: "1.0rem" }}>
+        <a href="https://x.com/gnashxnax" style={{ textDecoration: "none", color: "white" }}>
+          <FontAwesomeIcon icon={faXTwitter} />
+        </a>
+        <a href="https://www.instagram.com/gnashhh_" style={{ textDecoration: "none", color: "white" }}>
+          <FontAwesomeIcon icon={faInstagram} />
+        </a>
+        <a href="https://www.linkedin.com/saiganeshpulipaka" style={{ textDecoration: "none", color: "white" }}>
+          <FontAwesomeIcon icon={faLinkedinIn} />
         </a>
       </nav>
       <footer style={{ marginTop: "2rem", fontSize: "0.8rem" }}>
