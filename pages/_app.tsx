@@ -1,8 +1,13 @@
-import type { AppProps } from 'next/app';
-import "../styles/globals.css";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+export default function NavBar() {
+  const { basePath } = useRouter(); // ✅ Gets correct basePath
+
+  return (
+    <nav>
+      <Link href={`${basePath}/blog`}>Blog</Link>
+      <Link href={`${basePath}/projects`}>Projects</Link>
+    </nav>
+  );
 }
-
-export default MyApp;
