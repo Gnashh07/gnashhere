@@ -39,8 +39,8 @@ export default function Home() {
         <li>Presently running an exclusive members-only community called The Renaissance. <br />
           <strong>Reach out to me to know more!!</strong>
         </li>
-        <li>Currently learning AI/ML one research paper at a time and building some cool projects.(check out my blogs to know more)</li>
-        <li>With that, on a path to create greater value to mankind.</li>
+        <li>Learning AI/ML one research paper at a time and building some cool projects.(check out my blogs to know more)</li>
+        <li>Currently working as an ML Engineer at Kona AI</li>
       </ul>
     </div>
   );
