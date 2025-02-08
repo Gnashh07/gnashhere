@@ -1,24 +1,58 @@
 import fs from "fs";
 import path from "path";
+import { GetStaticPaths, GetStaticProps } from "next";
 
-export default function BlogPost({ title, content }) {
+interface BlogPostProps {
+  title: string;
+  content: string;
+  date: string;
+}
+
+export default function BlogPost({ title, content, date }: BlogPostProps) {
   return (
     <>
-      <h1>{title}</h1>
-      <article>
-        {content.split("\n").map((line, index) => (
-          <p key={index}>{line}</p>
-        ))}
-      </article>
+      <div className="blog-container">
+        <h1>{title}</h1>
+        <p className="blog-meta">gnash | {date}</p>
+        <article>
+          {content.split("\n").map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
+        </article>
+      </div>
+
+      <style jsx>{`
+        .blog-container {
+          max-width: 800px;
+          margin: auto;
+          padding: 20px;
+          font-family: "Spline Sans Mono", monospace;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+          margin-bottom: 10px;
+        }
+
+        .blog-meta {
+          font-size: 1rem;
+          color: #aaaaaa;
+          margin-bottom: 20px;
+        }
+
+        article p {
+          font-size: 1.2rem;
+          line-height: 1.6;
+        }
+      `}</style>
     </>
   );
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const postsDirectory = path.join(process.cwd(), "posts");
 
   if (!fs.existsSync(postsDirectory)) {
-    console.warn("⚠️ Warning: 'posts/' directory not found! Returning empty paths.");
     return { paths: [], fallback: false };
   }
 
@@ -29,11 +63,11 @@ export async function getStaticPaths() {
   }));
 
   return { paths, fallback: false };
-}
+};
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postsDirectory = path.join(process.cwd(), "posts");
-  const filePath = path.join(postsDirectory, `${params.slug}.txt`);
+  const filePath = path.join(postsDirectory, `${params?.slug}.txt`);
 
   if (!fs.existsSync(filePath)) {
     return { notFound: true };
@@ -43,5 +77,9 @@ export async function getStaticProps({ params }) {
   const title = fileContent[0] || "Untitled Blog Post";
   const content = fileContent.slice(1).join("\n");
 
-  return { props: { title, content } };
-}
+  // Get file last modified date
+  const stats = fs.statSync(filePath);
+  const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(stats.mtime);
+
+  return { props: { title, content, date } };
+};

@@ -1,4 +1,3 @@
-// index.tsx
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons/faXTwitter";
@@ -7,7 +6,7 @@ import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons/faLinkedinIn";
 
 export default function Home() {
   return (
-    (<div
+    <div
       style={{
         backgroundColor: "black",
         color: "white",
@@ -21,31 +20,21 @@ export default function Home() {
     >
       <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>
         hey, it&apos;s{" "}
-        <Link
-          href="/about"
-          style={{
-            color: "purple",
-            textDecoration: "underline",
-          }}>
-          
-            gnashhere
-          
+        <Link href="/about" style={{ color: "purple", textDecoration: "underline" }}>
+          gnashhere
         </Link>
       </h1>
       <p style={{ marginBottom: "2rem" }}>this is my second brain.</p>
       <nav style={{ display: "flex", gap: "1.5rem", fontSize: "1.2rem" }}>
-        <a href="/blog" style={{ textDecoration: "none", color: "white" }}>
+        <Link href="/blog" style={{ textDecoration: "none", color: "white" }}>
           blog
-        </a>
-        <a href="/projects" style={{ textDecoration: "none", color: "white" }}>
+        </Link>
+        <Link href="/projects" style={{ textDecoration: "none", color: "white" }}>
           projects
-        </a>
-        {/* <a href="/contact" style={{ textDecoration: "none", color: "white" }}>
-          contact
-        </a> */}
-        <a href="/bookshelf" style={{ textDecoration: "none", color: "white" }}>
+        </Link>
+        <Link href="/bookshelf" style={{ textDecoration: "none", color: "white" }}>
           bookshelf
-        </a>
+        </Link>
       </nav>
       <hr style={{visibility: "hidden"}}/>
       <hr style={{visibility: "hidden"}}/>
@@ -56,13 +45,13 @@ export default function Home() {
         <a href="https://www.instagram.com/gnashhh_" style={{ textDecoration: "none", color: "white" }}>
           <FontAwesomeIcon icon={faInstagram} />
         </a>
-        <a href="https://www.linkedin.com/saiganeshpulipaka" style={{ textDecoration: "none", color: "white" }}>
+        <a href="https://www.linkedin.com/in/ganeshpulipaka001/" style={{ textDecoration: "none", color: "white" }}>
           <FontAwesomeIcon icon={faLinkedinIn} />
         </a>
       </nav>
       <footer style={{ marginTop: "2rem", fontSize: "0.8rem" }}>
         © 2024 GnashHere. All Rights Reserved.
       </footer>
-    </div>)
+    </div>
   );
 }

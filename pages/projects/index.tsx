@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 interface Repo {
   name: string;
   html_url: string;
-  readme: string;
+  description?: string; // Ensure description is optional
   stars: number;
   forks: number;
 }
@@ -15,17 +15,17 @@ export default function Projects() {
   useEffect(() => {
     async function fetchRepos() {
       const response = await fetch(`https://api.github.com/users/${username}/repos`);
-      const reposData = await response.json();
+      const reposData: Repo[] = await response.json(); // ✅ Ensure correct typing
 
       const reposWithReadme = await Promise.all(
-        reposData.map(async (repo) => {
+        reposData.map(async (repo: Repo) => {
           const readmeText = await fetchReadme(username, repo.name);
           return {
             name: repo.name,
             html_url: repo.html_url,
-            readme: readmeText,
-            stars: repo.stargazers_count,
-            forks: repo.forks_count,
+            description: readmeText || "No description available", // ✅ Provide a default value
+            stars: repo.stars || 0,
+            forks: repo.forks || 0,
           };
         })
       );
@@ -53,7 +53,8 @@ export default function Projects() {
                   {repo.name}
                 </a>
               </h2>
-              <p>{repo.readme.length > 150 ? repo.readme.substring(0, 150) + "..." : repo.readme}</p>
+              {/* ✅ Safe handling of undefined descriptions */}
+              <p>{repo.description && repo.description.length > 150 ? repo.description.substring(0, 150) + "..." : repo.description}</p>
               <div className="repo-meta">
                 ⭐ {repo.stars} Stars | 🍴 {repo.forks} Forks
               </div>
