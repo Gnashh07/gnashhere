@@ -18,6 +18,7 @@ export async function getStaticPaths() {
   const postsDirectory = path.join(process.cwd(), "posts");
 
   if (!fs.existsSync(postsDirectory)) {
+    console.warn("⚠️ Warning: 'posts/' directory not found! Returning empty paths.");
     return { paths: [], fallback: false };
   }
 
