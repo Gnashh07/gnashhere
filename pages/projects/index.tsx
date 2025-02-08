@@ -6,24 +6,26 @@ interface Repo {
   readme: string;
   stars: number;
   forks: number;
-  default_branch: string;
 }
 
 export default function Projects() {
   const [repos, setRepos] = useState<Repo[]>([]);
-  const username = "Gnashh07"; // Replace with your GitHub username
+  const username = "Gnashh07"; // Your GitHub username
 
   useEffect(() => {
     async function fetchRepos() {
       const response = await fetch(`https://api.github.com/users/${username}/repos`);
-      const reposData: Repo[] = await response.json();
+      const reposData = await response.json();
 
       const reposWithReadme = await Promise.all(
         reposData.map(async (repo) => {
-          const readmeText = await fetchReadme(username, repo.name, repo.default_branch);
+          const readmeText = await fetchReadme(username, repo.name);
           return {
-            ...repo,
+            name: repo.name,
+            html_url: repo.html_url,
             readme: readmeText,
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
           };
         })
       );
@@ -37,35 +39,78 @@ export default function Projects() {
   return (
     <>
       <header>
-        <h1>My Projects</h1>
+        <h1 style={{ textAlign: "center", fontSize: "2rem", marginBottom: "20px" }}>
+          My Projects
+        </h1>
       </header>
 
-      <main className="container">
+      <main className="projects-container">
         {repos.length > 0 ? (
           repos.map((repo) => (
-            <div key={repo.name} className="project">
+            <div key={repo.name} className="project-card">
               <h2>
                 <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
                   {repo.name}
                 </a>
               </h2>
-              <p>{repo.readme.substring(0, 300)}...</p>
+              <p>{repo.readme.length > 150 ? repo.readme.substring(0, 150) + "..." : repo.readme}</p>
               <div className="repo-meta">
                 ⭐ {repo.stars} Stars | 🍴 {repo.forks} Forks
               </div>
             </div>
           ))
         ) : (
-          <p>Loading projects...</p>
+          <p style={{ textAlign: "center" }}>Loading projects...</p>
         )}
       </main>
+
+      <style jsx>{`
+        .projects-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 20px;
+          padding: 20px;
+        }
+        .project-card {
+          background: #111;
+          border-radius: 10px;
+          padding: 20px;
+          border: 1px solid #333;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+          text-align: center;
+        }
+        h2 a {
+          text-decoration: none;
+          color: #00b7ff;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        h2 a:hover {
+          text-decoration: underline;
+        }
+        .repo-meta {
+          margin-top: 10px;
+          font-size: 14px;
+          color: #aaa;
+        }
+      `}</style>
     </>
   );
 }
 
-async function fetchReadme(username: string, repoName: string, branch: string) {
+// Function to fetch README.md from the correct branch
+async function fetchReadme(username: string, repoName: string) {
+  const repoResponse = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
+  if (!repoResponse.ok) {
+    return "No README found.";
+  }
+  const repoData = await repoResponse.json();
+  const defaultBranch = repoData.default_branch;
+
+  // Fetch README.md from the correct branch
   const readmeResponse = await fetch(
-    `https://raw.githubusercontent.com/${username}/${repoName}/${branch}/README.md`
+    `https://raw.githubusercontent.com/${username}/${repoName}/${defaultBranch}/README.md`
   );
+
   return readmeResponse.ok ? await readmeResponse.text() : "No README found.";
 }
