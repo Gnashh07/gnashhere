@@ -1,30 +1,26 @@
 import fs from "fs";
 import path from "path";
 
-export default function Post({ title, content }: { title: string; content: string }) {
+export default function BlogPost({ title, content }) {
   return (
     <>
-      <header>
-        <h1>{title}</h1>
-      </header>
-
-      <main className="container">
-        <article>
-          {content.split("\n").map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
-        </article>
-      </main>
-
-      <footer>
-        <p>&copy; 2024 GnashHere. All Rights Reserved.</p>
-      </footer>
+      <h1>{title}</h1>
+      <article>
+        {content.split("\n").map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+      </article>
     </>
   );
 }
 
 export async function getStaticPaths() {
   const postsDirectory = path.join(process.cwd(), "posts");
+
+  if (!fs.existsSync(postsDirectory)) {
+    return { paths: [], fallback: false };
+  }
+
   const filenames = fs.readdirSync(postsDirectory);
 
   const paths = filenames.map((filename) => ({
@@ -34,13 +30,17 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-export async function getStaticProps({ params }: { params: { slug: string } }) {
+export async function getStaticProps({ params }) {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${params.slug}.txt`);
-  const fileContent = fs.readFileSync(filePath, "utf8");
-  const lines = fileContent.split("\n");
-  const title = lines[0];
-  const content = lines.slice(1).join("\n");
+
+  if (!fs.existsSync(filePath)) {
+    return { notFound: true };
+  }
+
+  const fileContent = fs.readFileSync(filePath, "utf8").split("\n");
+  const title = fileContent[0] || "Untitled Blog Post";
+  const content = fileContent.slice(1).join("\n");
 
   return { props: { title, content } };
 }
