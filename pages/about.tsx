@@ -41,8 +41,8 @@ export default function About() {
           Presently running an exclusive members-only community called The Renaissance. <br />
           <strong>Reach out to me to know more!!</strong>
         </li>
-        <li style={{ color: "#FFA500" }}>Learning AI/ML one research paper at a time and building some cool projects. (Check out my blogs to know more)</li>
-        <li style={{ color: "#FFA500" }}>Currently working as an ML Engineer at Kona AI</li>
+        <li style={{ color: "#FFA500" }}>Learning AI/ML one research paper at a time and building some cool projects. (Check out my projects to know more)</li>
+        <li style={{ color: "#FFA500" }}>Currently working as an ML Engineer at Kona AI.</li>
       </ul>
     </div>
   );

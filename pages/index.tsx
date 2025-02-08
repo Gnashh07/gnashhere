@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons/faXTwitter";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons/faInstagram";
-import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons/faLinkedinIn";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXTwitter, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 
 export default function Home() {
   return (
@@ -16,6 +14,7 @@ export default function Home() {
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",
+        padding: "20px",  // ✅ Added padding for mobile view
       }}
     >
       <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>
@@ -25,7 +24,7 @@ export default function Home() {
         </Link>
       </h1>
       <p style={{ marginBottom: "2rem" }}>this is my second brain.</p>
-      <nav style={{ display: "flex", gap: "1.5rem", fontSize: "1.2rem" }}>
+      <nav style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", fontSize: "1.2rem" }}>
         <Link href="/blog" style={{ textDecoration: "none", color: "white" }}>
           blog
         </Link>
@@ -36,8 +35,8 @@ export default function Home() {
           bookshelf
         </Link>
       </nav>
-      <hr style={{visibility: "hidden"}}/>
-      <hr style={{visibility: "hidden"}}/>
+      <hr style={{ visibility: "hidden" }} />
+      <hr style={{ visibility: "hidden" }} />
       <nav style={{ display: "flex", gap: "1.5rem", fontSize: "1.0rem" }}>
         <a href="https://x.com/gnashxnax" style={{ textDecoration: "none", color: "white" }}>
           <FontAwesomeIcon icon={faXTwitter} />
